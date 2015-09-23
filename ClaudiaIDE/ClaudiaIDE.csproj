@@ -111,6 +111,10 @@
       <HintPath>..\packages\VSSDK.Text.11.0.4\lib\net45\Microsoft.VisualStudio.Text.UI.Wpf.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -135,6 +139,7 @@
     <Compile Include="Helpers\AnimateImageChangeParams.cs" />
     <Compile Include="Helpers\ImageSourceAnimator.cs" />
     <Compile Include="IImageProvider.cs" />
+    <Compile Include="ImageProvider\OnlineSlideShowProvider.cs" />
     <Compile Include="ImageProvider\SildeShowImageProvider.cs" />
     <Compile Include="ImageProvider\SingleImageProvider.cs" />
     <Compile Include="Options\ClaudiaIdeOptionPageGrid.cs">

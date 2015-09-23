@@ -46,8 +46,9 @@ namespace ClaudiaIDE
             {
                 ImageProviders = new List<IImageProvider>
                 {
-                    new SildeShowImageProvider(settings),
-                    new SingleImageProvider(settings)
+                    new SlideShowImageProvider(settings),
+                    new SingleImageProvider(settings),
+                    new OnlineSlideShowImageProvider(settings),
                 };
             }
 

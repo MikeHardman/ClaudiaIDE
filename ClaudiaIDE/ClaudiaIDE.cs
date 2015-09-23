@@ -137,7 +137,7 @@ namespace ClaudiaIDE
                 }
                 RefreshAdornment();
             }
-            catch
+            catch(Exception ex)
 			{
 			}
 		}

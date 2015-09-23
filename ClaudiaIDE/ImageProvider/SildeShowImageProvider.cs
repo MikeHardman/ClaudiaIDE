@@ -10,14 +10,14 @@ using System.Collections;
 
 namespace ClaudiaIDE
 {
-    public class SildeShowImageProvider : IImageProvider
+    public class SlideShowImageProvider : IImageProvider
     {
         private readonly Timer _timer;
         private Setting _setting;
         private ImageFiles _imageFiles;
         private IEnumerator<string> _imageFilesPath;
 
-        public SildeShowImageProvider(Setting setting)
+        public SlideShowImageProvider(Setting setting)
         {
             _setting = setting;
 
@@ -56,7 +56,7 @@ namespace ClaudiaIDE
             {
                 _timer.Change(Timeout.Infinite, Timeout.Infinite);
             }
-            else
+            else if (_setting.ImageAlbumProvider == ImageAlbumProvider.Local)
             {
                 _imageFiles = GetImagesFromDirectory();
                 _imageFilesPath = _imageFiles.GetEnumerator();
@@ -120,4 +120,6 @@ namespace ClaudiaIDE
             return this.GetEnumerator();
         }
     }
+
+
 }

@@ -51,8 +51,12 @@ namespace ClaudiaIDE.Settings
         public TimeSpan ImageFadeAnimationInterval { get; set; }
 		public string BackgroundImagesDirectoryAbsolutePath { get; set; }
         public string Extensions { get; set; }
+        public string BackgroundImageAlbumUrl { get; set; }
+        public ImageAlbumProvider ImageAlbumProvider { get; set; }
 
-	    public void Serialize()
+
+
+        public void Serialize()
 		{
 			var config = JsonSerializer<Setting>.Serialize(this);
 
@@ -98,6 +102,8 @@ namespace ClaudiaIDE.Settings
             Extensions = (string)props.Item("Extensions").Value;
             ImageBackgroundType = (ImageBackgroundType)props.Item("ImageBackgroundType").Value;
             ImageFadeAnimationInterval = (TimeSpan)props.Item("ImageFadeAnimationInterval").Value;
+            ImageAlbumProvider = (ImageAlbumProvider)props.Item("ImageAlbumProvider").Value;
+            BackgroundImageAlbumUrl = props.Item("BackgroundImageAlbumUrl").Value;
         }
 
         public void OnApplyChanged()
@@ -165,7 +171,17 @@ namespace ClaudiaIDE.Settings
     public enum ImageBackgroundType
     {
         Single = 0,
-        Slideshow = 1
+        Slideshow = 1,
+        OnlineSlideshow = 2,
     }
 
+    [CLSCompliant(false), ComVisible(true)]
+    [Guid("B64C3974-6CC4-425F-8303-47B9518E8511")]
+    public enum ImageAlbumProvider
+    {
+        Local = 0,
+        Imgur = 1,
+        Flickr = 2,
+        Picasa = 3,
+    }
 }

@@ -26,7 +26,9 @@ namespace ClaudiaIDE.Options
 		    UpdateImageInterval = TimeSpan.FromMinutes(1);
             ImageFadeAnimationInterval = TimeSpan.FromSeconds(5);
             Extensions = ".png, .jpg";
-		}
+            ImageAlbumProvider = ImageAlbumProvider.Local;
+            BackgroundImageAlbumUrl = string.Empty;
+        }
 
         [Category("Image")]
         [DisplayName("Image background type")]
@@ -61,6 +63,18 @@ namespace ClaudiaIDE.Options
 		public string BackgroundImageDirectoryAbsolutePath { get; set; }
 
         [Category("Slideshow")]
+        [DisplayName("Image Album Provider")]
+        [Description("Background Image Album Source")]
+        [TypeConverter(typeof(ImageAlbumTypeConverter))]
+        public ImageAlbumProvider ImageAlbumProvider { get; set; }
+
+
+        [Category("Slideshow")]
+        [DisplayName("Album Url")]
+        [Description("The url of the online album")]
+        public string BackgroundImageAlbumUrl { get; set; }
+
+        [Category("Slideshow")]
         [DisplayName("Update interval")]
         [Description("Background image change interval. (value in format: HH:mm:ss)")]
         [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
@@ -83,7 +97,8 @@ namespace ClaudiaIDE.Options
         [DisplayName("File Path")]
         [Description("Backgroud image file path.")]
         [EditorAttribute(typeof(BrowseFile), typeof(UITypeEditor))]
-        public string BackgroundImageAbsolutePath { get; set; }
+        public string BackgroundImageAbsolutePath { get; set; }        
+
 
         protected override void OnApply(PageApplyEventArgs e)
         {
@@ -121,6 +136,7 @@ namespace ClaudiaIDE.Options
             {
                 if (str == "Single") return ImageBackgroundType.Single;
                 if (str == "Slideshow") return ImageBackgroundType.Slideshow;
+                if (str == "ImageBackgroundType") return ImageBackgroundType.OnlineSlideshow;
             }
 
             return base.ConvertFrom(context, culture, value);
@@ -138,6 +154,69 @@ namespace ClaudiaIDE.Options
                 else if ((int)value == 1)
                 {
                     result = "Slideshow";
+                }
+                else if ((int) value == 2)
+                {
+                    result = "OnlineSlideshow";
+                }
+
+                if (result != null) return result;
+            }
+
+            return base.ConvertTo(context, culture, value, destinationType);
+        }
+    }
+    public class ImageAlbumTypeConverter : EnumConverter
+    {
+        public ImageAlbumTypeConverter()
+            : base(typeof(ImageBackgroundType))
+        {
+
+        }
+
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        {
+            if (sourceType == typeof(string)) return true;
+
+            return base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        {
+            string str = value as string;
+
+            if (str != null)
+            {
+                if (str == "Local") return ImageAlbumProvider.Local;
+                if (str == "Imgur") return ImageAlbumProvider.Imgur;
+                if (str == "Flickr") return ImageAlbumProvider.Flickr;
+                if (str == "Picasa") return ImageAlbumProvider.Picasa;
+                
+            }
+
+            return base.ConvertFrom(context, culture, value);
+        }
+
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        {
+            if (destinationType == typeof(string))
+            {
+                string result = null;
+                if ((int)value == 0)
+                {
+                    result = "Local";
+                }
+                else if ((int)value == 1)
+                {
+                    result = "Imgur";
+                }
+                else if ((int)value == 2)
+                {
+                    result = "Flickr";
+                }
+                else if ((int)value == 3)
+                {
+                    result = "Picasa";
                 }
 
                 if (result != null) return result;
